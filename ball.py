@@ -5,33 +5,30 @@ import os
 import math
 import time
 import random
-from const import *
-
+from constant import *
 
 class Ball(pygame.sprite.Sprite):
 
-    def __init__(self, game, angle, typ, number, image, level, x, y):
+    def __init__(self, angle, typ, number, image, level, x, y):
         pygame.sprite.Sprite.__init__(self)
         self.speed = 1
-        self.game = game
-        #self.bullet_speed
         self.number = number
         self.type = typ
         self.level = level
         self.image = image
         self.angle = angle
-        self.image.set_colorkey(Const().BLACK)
+        self.image.set_colorkey(BLACK)
         self.rect = self.image.get_rect()
         if self.level == "Первый":
             self.rect.x = x
             self.rect.y = y
         if self.type == "bullet":
-            self.rect.center = (Const().width / 2, Const().height / 2)
+            self.rect.center = (width / 2, height / 2)
         self.shoot_angle = self.angle + 90
-        self.radius = 15
+        self.radius = 10
 
     def update(self):
-        if self.level == "Тренировка":
+        if self.level == "Нулевой":
             if self.type == "common":
                 self.circle(525, 250, 125)
             if self.type == "reverse":
@@ -85,17 +82,17 @@ class Ball(pygame.sprite.Sprite):
             self.rect.y += speed
 
     def reduce_distance(self):
-        if self.level == "Тренировка":
+        if self.level == "Нулевой":
             self.reverse_circle(525, 250, 125)
         if self.level == "Первый":
             self.reverse_maze()
 
     def current_bullet(self):
-        self.rect.x = Const().width/2 + 25
-        self.rect.y = Const().height/2 + 25
+        self.rect.x = width/2 + 25
+        self.rect.y = height/2 + 25
 
     def return_new_ball_pos(self):
-        if self.level == "Тренировка":
+        if self.level == "Нулевой":
             for i in range(50):
                 self.circle(525, 250, 125)
             angle = self.angle
@@ -115,7 +112,7 @@ class Ball(pygame.sprite.Sprite):
             return angle, x, y
 
     def correct_sprites_trajectory(self):
-        if self.level == "Тренировка":
+        if self.level == "Нулевой":
             for i in range(50):
                 self.circle(525, 250, 125)
         if self.level == "Первый":
@@ -134,10 +131,11 @@ class Ball(pygame.sprite.Sprite):
 
     def bullet(self):
         #global game
+        #global bullet_speed
         self.rect.y += (math.cos(math.pi * self.shoot_angle / 180) *
-                        self.game.bullet_speed)
+                        bullet_speed)
         self.rect.x += (math.sin(math.pi * self.shoot_angle / 180) *
-                        self.game.bullet_speed)
-        if (self.rect.x < 0 or self.rect.x > Const().width
-           or self.rect.y < 0 or self.rect.y > Const().height):
+                        bullet_speed)
+        if (self.rect.x < 0 or self.rect.x > width
+           or self.rect.y < 0 or self.rect.y > height):
             self.kill()
