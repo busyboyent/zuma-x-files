@@ -33,7 +33,7 @@ gray_image = pygame.image.load(os.path.join(image_folder, 'Gray.png'))
 violet_image = pygame.image.load(os.path.join(image_folder, 'Violet.png'))
 yellow_image = pygame.image.load(os.path.join(image_folder, 'Yellow.png'))
 skull_image = pygame.image.load(os.path.join(image_folder, 'Skull.png'))
-bomb_image = pygame.image.load(os.path.join(image_folder, 'Bomb.png'))
+
 balls_images = [red_image, blue_image, gray_image,
                 violet_image, yellow_image]
 current_bullet = random.choice(balls_images)
